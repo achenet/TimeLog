@@ -16,10 +16,7 @@ var startCmd = &cobra.Command{
 
 func StartCmd(cmd *cobra.Command, args []string) {
 	// Get args
-	newTaskName := args[0]
-	tl.DataStore.TaskList[newTaskName] = data_store.Task{
-		Name:      newTaskName,
-		TotalTime: time.Duration(0),
-	}
-	fmt.Println("Added task:", newTaskName)
+	taskName := args[0]
+	tl := readAndUnmarshalStorageFile()
+	tl[taskName].CurrentStart = time.Now()
 }
