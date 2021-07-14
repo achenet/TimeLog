@@ -3,10 +3,7 @@
 package data_store
 
 import (
-	"encoding/json"
-	"os"
 	"time"
-	"fmt"
 )
 
 type DataStore struct {
@@ -14,12 +11,6 @@ type DataStore struct {
 	Storage string
 }
 
-func NewDataStore(taskList TaskList, storage string) *DataStore {
-	return &DataStore{
-		taskList,
-		storage,
-	}
-}
 
 type TaskList map[string]Task
 
@@ -28,6 +19,13 @@ type Task struct {
 	TotalTime    time.Duration
 	CurrentStart time.Time
 	Finished     bool
+}
+
+func NewDataStore(taskList TaskList, storage string) *DataStore {
+	return &DataStore{
+		taskList,
+		storage,
+	}
 }
 
 func (tl TaskList) CheckThatAllNamesAreCorrect() bool {
@@ -39,17 +37,3 @@ func (tl TaskList) CheckThatAllNamesAreCorrect() bool {
 	return true
 }
 
-
-func WriteToFile(file *os.File, data interface{}) error {
-	// Marshal to json
-	marshaledData, err := json.Marshal(data)
-	if err != nil {
-		return err
-	}
-	_, err = file.Write(marshaledData)
-	if err != nil {
-		return err
-	}
-	fmt.Println("Wrote to file", file)
-	return nil
-}

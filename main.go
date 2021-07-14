@@ -12,7 +12,7 @@ const (
 )
 
 var (
-	tl cmd.TimeLogger
+	tl       cmd.TimeLogger
 	taskList data_store.TaskList
 )
 
@@ -22,7 +22,7 @@ func init() {
 		log.Fatal("Error making storage directory:", err.Error())
 	}
 
-	// Read from storage directory if it has anything in it. 
+	// Read from storage directory if it has anything in it.
 	storageDirectory, err := os.Open(TaskListDirectory)
 	if err != nil {
 		log.Fatal("Error opening storage directory:", err.Error())
@@ -46,9 +46,4 @@ func main() {
 	tl = NewTimeLogger(taskList)
 	fmt.Println("TimeLog")
 	tl.Execute()
-}
-
-func readTaskFromFile(fileName string) error {
-
-	return nil
 }
