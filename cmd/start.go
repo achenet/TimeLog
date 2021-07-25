@@ -3,7 +3,6 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
-	"time"
 )
 
 var startCmd = &cobra.Command{
@@ -16,7 +15,7 @@ func StartCmd(cmd *cobra.Command, args []string) {
 	taskName := args[0]
 
 	tl := readAndUnmarshalStorageFile()
-	tl[taskName].CurrentStart = time.Now()
+	tl.StartTask(taskName)
 
 	// Write to file
 	marshalAndWriteToStorageFile(tl)

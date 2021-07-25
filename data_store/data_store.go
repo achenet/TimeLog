@@ -1,6 +1,7 @@
 package data_store
 
 import (
+	"fmt"
 	"time"
 )
 
@@ -12,8 +13,8 @@ type Task struct {
 	CurrentStart time.Time
 }
 
-func (tl DataStore) CheckThatAllNamesAreCorrect() bool {
-	for taskName, task := range tl {
+func (ds DataStore) CheckThatAllNamesAreCorrect() bool {
+	for taskName, task := range ds {
 		if task.Name != taskName {
 			return false
 		}
@@ -21,7 +22,25 @@ func (tl DataStore) CheckThatAllNamesAreCorrect() bool {
 	return true
 }
 
-func (tl DataStore) StopTask(taskName string) {
-	elapsedTime := time.Since(tl[taskName].CurrentStart)
-	tl[taskName].TotalTime = tl[taskName].TotalTime + elapsedTime
+func (ds DataStore) StartTask(taskName string) {
+	// Check if task exists, create if not.
+	if _, ok := ds[taskName]; !ok {
+		ds[taskName] = &Task{
+			Name: taskName,
+		}
+	}
+
+	// Set start time
+	ds[taskName].CurrentStart = time.Now()
+}
+
+func (ds DataStore) StopTask(taskName string) {
+	// Make sure the task exists
+	if _, ok := ds[taskName]; !ok {
+		fmt.Println("No task with that name was found.")
+		return
+	}
+
+	elapsedTime := time.Since(ds[taskName].CurrentStart)
+	ds[taskName].TotalTime = ds[taskName].TotalTime + elapsedTime
 }
