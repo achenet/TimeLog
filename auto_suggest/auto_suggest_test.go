@@ -56,7 +56,7 @@ var autoSuggestMultipleTestCases = []autoSuggestTestCase{
 	{
 		input:      "run",
 		dictionary: []string{"run", "jump", "walk"},
-		expected:   []string{},
+		expected:   []string{"run"},
 	},
 	{
 		input:      "runm",
@@ -67,6 +67,11 @@ var autoSuggestMultipleTestCases = []autoSuggestTestCase{
 		input:      "rnu",
 		dictionary: []string{"run", "jump", "walk"},
 		expected:   []string{"run"},
+	},
+	{
+		input:      "3",
+		dictionary: []string{"run", "jump", "walk", "1", "2", "13"},
+		expected:   []string{"1", "2", "13"},
 	},
 }
 

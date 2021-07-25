@@ -2,6 +2,7 @@ package data_store
 
 import (
 	"fmt"
+	"github.com/achenet/TimeLog/auto_suggest"
 	"time"
 )
 
@@ -42,6 +43,9 @@ func (ds DataStore) StopTask(taskName string) {
 	// Make sure the task exists
 	if _, ok := ds[taskName]; !ok {
 		fmt.Println("No task with that name was found.")
+		// Find possible similar tasks using auto_suggest
+		possibleTasks := auto_suggest.AutoSuggest(taskName, ds.GetTaskNames())
+		fmt.Println("Possible tasks include:", possibleTasks)
 		return
 	}
 
@@ -61,4 +65,12 @@ func (ds DataStore) ShowInfo() {
 	for name, task := range ds {
 		fmt.Println(name+", Total Time:", task.TotalTime.Minutes(), "minutes, in progress:", task.InProgress)
 	}
+}
+
+func (ds DataStore) GetTaskNames() []string {
+	taskNames := make([]string, 0, len(ds))
+	for nameOfTask := range ds {
+		taskNames = append(taskNames, nameOfTask)
+	}
+	return taskNames
 }

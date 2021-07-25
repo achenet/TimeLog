@@ -1,12 +1,12 @@
 // A package to handle suggest strings similar to the string entered.
 package auto_suggest
 
-const MaximumDiff = 3
+const MaximumDiff = 5
 
 func AutoSuggest(input string, dictionary []string) []string {
 	possibleStrings := make([]string, 0)
 	for _, word := range dictionary {
-		if CalculateStringDiff(input, word) < MaximumDiff && word != input {
+		if CalculateStringDiff(input, word) < MaximumDiff  {
 			possibleStrings = append(possibleStrings, word)
 		}
 	}
