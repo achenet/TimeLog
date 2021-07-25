@@ -1,49 +1,53 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/achenet/TimeLog/cmd"
-	"log"
+	"github.com/achenet/TimeLog/data_store"
 	"os"
 )
 
-const (
-	TaskListDirectory = "~/.taskList/"
-)
+func main() {
 
-var (
-	tl       cmd.TimeLogger
-	taskList data_store.TaskList
-)
+	// Set storage file path
+	cmd.SetStorageFilePath()
 
-func init() {
 	// Make storage directory if it isn't already created
 	if err := os.MkdirAll(TaskListDirectory, 744); err != nil {
-		log.Fatal("Error making storage directory:", err.Error())
+		fmt.Println("Error making storage directory: \n", err.Error())
+		os.Exit(1)
 	}
 
-	// Read from storage directory if it has anything in it.
-	storageDirectory, err := os.Open(TaskListDirectory)
+	// Create datastore file if it doesn't already exist
+	fmt.Println("Opening file")
+	_, err := os.Open(cmd.StorageFilePath)
 	if err != nil {
-		log.Fatal("Error opening storage directory:", err.Error())
-	}
-	storageDirectoryEntries, err := storageDirectory.ReadDir(-1)
-	if err != nil {
-		log.Fatal("Error reading storage directory", err.Error())
+
+		fmt.Println("Could not open file, due to", err.Error(), "\nOpting to create one instead.")
+
+		file, err := os.Create(cmd.StorageFilePath)
+		if err != nil {
+			fmt.Println("Could not create storage file:\n" + err.Error())
+			os.Exit(1)
+		}
+
+		// If it doesn't exist, write something empty in it.
+		tl := make(data_store.DataStore)
+		m, err := json.Marshal(tl)
+		if err != nil {
+			fmt.Println("Error creating blank file:\n" + err.Error())
+			os.Exit(1)
+		}
+
+		_, err = file.Write(m)
+		if err != nil {
+			fmt.Println("Error writing empty datastore to new file:\n" + err.Error())
+			os.Exit(1)
+		}
+
+		fmt.Println("Created and wrote to empty file")
 	}
 
-	// If empty, finish init
-	if len(storageDirectoryEntries) == 0 {
-		return
-	}
-
-	for _, task := range storageDirectoryEntries {
-
-	}
-}
-
-func main() {
-	tl = NewTimeLogger(taskList)
-	fmt.Println("TimeLog")
-	tl.Execute()
+	cmd.Execute()
 }
