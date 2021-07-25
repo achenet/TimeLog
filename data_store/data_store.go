@@ -11,7 +11,7 @@ type Task struct {
 	Name         string // Should always be the same as the key for this task in the map.
 	TotalTime    time.Duration
 	CurrentStart time.Time
-	InProgress  bool
+	InProgress   bool
 }
 
 func (ds DataStore) CheckThatAllNamesAreCorrect() bool {
@@ -52,12 +52,13 @@ func (ds DataStore) StopTask(taskName string) {
 	}
 
 	elapsedTime := time.Since(ds[taskName].CurrentStart)
-	ds[taskName].TotalTime = ds[taskName].TotalTime + elapsedTime
+	ds[taskName].TotalTime += elapsedTime
+	ds[taskName].InProgress = false
 }
 
 // Show information contained in the datastore in a user-friendly format.
 func (ds DataStore) ShowInfo() {
 	for name, task := range ds {
-		fmt.Println(name + ", Total Time:", task.TotalTime.Minutes(), "minutes, in progress:", task.InProgress)
+		fmt.Println(name+", Total Time:", task.TotalTime.Minutes(), "minutes, in progress:", task.InProgress)
 	}
 }
