@@ -1,10 +1,7 @@
 package cmd
 
 import (
-	"fmt"
-	"github.com/achenet/TimeLog/data_store"
 	"github.com/spf13/cobra"
-	"time"
 )
 
 var stopCmd = &cobra.Command{
@@ -19,5 +16,9 @@ func StopCmd(cmd *cobra.Command, args []string) {
 
 	// Get file
 	tl := readAndUnmarshalStorageFile()
-	tl.TaskList
+
+	// Stop task
+	tl.StopTask(taskName)
+
+	marshalAndWriteToStorageFile(tl)
 }

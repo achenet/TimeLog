@@ -14,7 +14,7 @@ func main() {
 	cmd.SetStorageFilePath()
 
 	// Make storage directory if it isn't already created
-	if err := os.MkdirAll(TaskListDirectory, 744); err != nil {
+	if err := os.MkdirAll(cmd.StorageDirectory, 744); err != nil {
 		fmt.Println("Error making storage directory: \n", err.Error())
 		os.Exit(1)
 	}

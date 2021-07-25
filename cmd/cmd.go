@@ -1,5 +1,21 @@
 package cmd
 
+import (
+	"encoding/json"
+	"fmt"
+	"github.com/achenet/TimeLog/data_store"
+	"os"
+)
+
+const (
+	DirectoryName = "/.timelog"
+	StorageFileName   = "datastore.json"
+)
+
+var (
+	StorageFilePath string
+	StorageDirectory string
+)
 func SetStorageFilePath() {
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
@@ -7,6 +23,8 @@ func SetStorageFilePath() {
 		os.Exit(1)
 	}
 
+	StorageDirectory = homeDir + DirectoryName
+	StorageFilePath =  StorageDirectory + StorageFileName
 }
 
 func readAndUnmarshalStorageFile() data_store.DataStore {
