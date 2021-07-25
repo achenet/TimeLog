@@ -1,12 +1,10 @@
-// The data_store package store data on the different tasks.
-// Store information in a FOLDER, with each file being a task?
 package data_store
 
 import (
 	"time"
 )
 
-type DataStore map[string]Task
+type DataStore map[string]*Task
 
 type Task struct {
 	Name         string // Should always be the same as the key for this task in the map.
@@ -14,7 +12,7 @@ type Task struct {
 	CurrentStart time.Time
 }
 
-func (tl *DataStore) CheckThatAllNamesAreCorrect() bool {
+func (tl DataStore) CheckThatAllNamesAreCorrect() bool {
 	for taskName, task := range tl {
 		if task.Name != taskName {
 			return false
@@ -23,11 +21,7 @@ func (tl *DataStore) CheckThatAllNamesAreCorrect() bool {
 	return true
 }
 
-func (tl *DataStore) StopTask(taskName string) {
+func (tl DataStore) StopTask(taskName string) {
 	elapsedTime := time.Since(tl[taskName].CurrentStart)
-	tl[taskName].TotalTime = tl[taskName].TotalTime.Add(elapsedTime)
-}
-
-func (tl *DataStore) SaveToFile(filepath string) {
-
+	tl[taskName].TotalTime = tl[taskName].TotalTime + elapsedTime
 }

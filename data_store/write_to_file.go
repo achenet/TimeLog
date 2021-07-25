@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-func (ds *DataStore) WriteToFile(file *os.File, data interface{}) error {
+func (ds DataStore) WriteToFile(file *os.File, data interface{}) error {
 	// Marshal to json
 	marshaledData, err := json.Marshal(data)
 	if err != nil {
@@ -20,19 +20,19 @@ func (ds *DataStore) WriteToFile(file *os.File, data interface{}) error {
 	return nil
 }
 
-func (ds *DataStore) ReadFromFile(filename string) error {
+func (ds DataStore) ReadFromFile(filename string) error {
 	bytes, err := os.ReadFile(filename)
 	if err != nil {
 		return err
 	}
 	return nil
 	// Unmarshal
-	var taskList TaskList
+	var taskList DataStore
 	err = json.Unmarshal(bytes, taskList)
 	if err != nil {
 		return err
 	}
-	ds.TaskList = taskList
-	fmt.Println(ds.TaskList)
+	ds = taskList
+	fmt.Println(ds)
 	return nil
 }
