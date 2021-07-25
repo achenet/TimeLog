@@ -8,14 +8,15 @@ import (
 )
 
 const (
-	DirectoryName = "/.timelog"
-	StorageFileName   = "datastore.json"
+	DirectoryName   = "/.timelog"
+	StorageFileName = "datastore.json"
 )
 
 var (
-	StorageFilePath string
+	StorageFilePath  string
 	StorageDirectory string
 )
+
 func SetStorageFilePath() {
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
@@ -24,7 +25,7 @@ func SetStorageFilePath() {
 	}
 
 	StorageDirectory = homeDir + DirectoryName
-	StorageFilePath =  StorageDirectory + StorageFileName
+	StorageFilePath = StorageDirectory + StorageFileName
 }
 
 func readAndUnmarshalStorageFile() data_store.DataStore {

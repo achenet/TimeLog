@@ -6,7 +6,7 @@ const MaximumDiff = 5
 func AutoSuggest(input string, dictionary []string) []string {
 	possibleStrings := make([]string, 0)
 	for _, word := range dictionary {
-		if CalculateStringDiff(input, word) < MaximumDiff  {
+		if CalculateStringDiff(input, word) < MaximumDiff {
 			possibleStrings = append(possibleStrings, word)
 		}
 	}

@@ -60,6 +60,20 @@ func (ds DataStore) StopTask(taskName string) {
 	ds[taskName].InProgress = false
 }
 
+// Delete a task if it exists
+func (ds DataStore) DeleteTask(taskName string) {
+	// Make sure the task exists
+	if _, ok := ds[taskName]; !ok {
+		fmt.Println("No task with that name was found.")
+		// Find possible similar tasks using auto_suggest
+		possibleTasks := auto_suggest.AutoSuggest(taskName, ds.GetTaskNames())
+		fmt.Println("Possible tasks include:", possibleTasks)
+		return
+	}
+
+	delete(ds, taskName)
+}
+
 // Show information contained in the datastore in a user-friendly format.
 func (ds DataStore) ShowInfo() {
 	for name, task := range ds {
