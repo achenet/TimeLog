@@ -18,22 +18,37 @@ var calcDiffMultipleTestCases = []calcDiffTestCase{
 	{
 		firstStr:  "yo",
 		secondStr: "yoyo",
-		expected:  2,
+		expected:  4,
 	},
 	{
 		firstStr:  "yo",
 		secondStr: "bobo",
-		expected:  3,
+		expected:  7,
 	},
 	{
 		firstStr:  "yo",
 		secondStr: "",
-		expected:  2,
+		expected:  4,
 	},
 	{
 		firstStr:  "yo",
 		secondStr: "thug",
-		expected:  4,
+		expected:  10,
+	},
+	{
+		firstStr:  "run",
+		secondStr: "rnu",
+		expected:  2,
+	},
+	{
+		firstStr:  "run",
+		secondStr: "cat",
+		expected:  9,
+	},
+	{
+		firstStr:  "run",
+		secondStr: "rune",
+		expected:  2,
 	},
 }
 
@@ -63,7 +78,7 @@ func TestCalculateDiff(t *testing.T) {
 	for _, tc := range calcDiffMultipleTestCases {
 		got := CalculateStringDiff(tc.firstStr, tc.secondStr)
 		if got != tc.expected {
-			t.Error("got:", got, "expected", tc.expected)
+			t.Error("Test case:", tc.firstStr, tc.secondStr, "\ngot:", got, "expected", tc.expected)
 		}
 	}
 }
