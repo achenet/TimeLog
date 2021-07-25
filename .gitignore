@@ -1,1 +1,4 @@
 pkg
+Dockerfile
+TimeLog
+data_store/testStorage
