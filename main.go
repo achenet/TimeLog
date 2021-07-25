@@ -20,7 +20,6 @@ func main() {
 	}
 
 	// Create datastore file if it doesn't already exist
-	fmt.Println("Opening file")
 	_, err := os.Open(cmd.StorageFilePath)
 	if err != nil {
 

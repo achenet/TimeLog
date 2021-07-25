@@ -22,7 +22,7 @@ func init() {
 // Usage timeog: print all tasks, with total time for each.
 func RootCmd(cmd *cobra.Command, args []string) {
 	tl := readAndUnmarshalStorageFile()
-	fmt.Println(tl)
+	tl.ShowInfo()
 }
 
 func Execute() {
