@@ -15,10 +15,10 @@ func StopCmd(cmd *cobra.Command, args []string) {
 	taskName := args[0]
 
 	// Get file
-	tl := readAndUnmarshalStorageFile()
+	ds := readAndUnmarshalStorageFile()
 
 	// Stop task
-	tl.StopTask(taskName)
+	ds.StopTask(taskName)
 
-	marshalAndWriteToStorageFile(tl)
+	marshalAndWriteToStorageFile(ds)
 }

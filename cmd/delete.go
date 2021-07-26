@@ -15,10 +15,10 @@ func DeleteCmd(cmd *cobra.Command, args []string) {
 	taskName := args[0]
 
 	// Get file
-	tl := readAndUnmarshalStorageFile()
+	ds := readAndUnmarshalStorageFile()
 
 	// Delete task
-	tl.DeleteTask(taskName)
+	ds.DeleteTask(taskName)
 
-	marshalAndWriteToStorageFile(tl)
+	marshalAndWriteToStorageFile(ds)
 }

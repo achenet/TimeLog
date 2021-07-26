@@ -14,9 +14,9 @@ var startCmd = &cobra.Command{
 func StartCmd(cmd *cobra.Command, args []string) {
 	taskName := args[0]
 
-	tl := readAndUnmarshalStorageFile()
-	tl.StartTask(taskName)
+	ds := readAndUnmarshalStorageFile()
+	ds.StartTask(taskName)
 
 	// Write to file
-	marshalAndWriteToStorageFile(tl)
+	marshalAndWriteToStorageFile(ds)
 }

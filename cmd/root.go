@@ -22,8 +22,8 @@ func init() {
 // Usage timelog stop taskName: stop counting on the task. Return error if it doesn't exist.
 // Usage timeog: print all tasks, with total time for each.
 func RootCmd(cmd *cobra.Command, args []string) {
-	tl := readAndUnmarshalStorageFile()
-	tl.ShowInfo()
+	ds := readAndUnmarshalStorageFile()
+	ds.ShowInfo()
 }
 
 func Execute() {

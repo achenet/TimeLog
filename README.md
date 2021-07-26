@@ -16,10 +16,12 @@ go build -o timelog
 ```
 
 ## Usage
-There are currently 3 commands.
+There are currently 4 commands.
 
 The `timelog` will list all tasks and the time spent working on them, as well as whether or not they are in progress.
 
 The `timelog start TASK_NAME` will start logging time for the task with name `TASK_NAME`. If one does not exist, it will be created.
 
 The `timelog stop TASK_NAME` will stop logging time for the task with name `TASK_NAME`, if it exists and is currently in progress. Otherwise, it will do nothing.
+
+The `timelog delete TASK_NAME` will delete the task with name `TASK_NAME`, if it exists. Otherwise, it will do nothing.
