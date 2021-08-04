@@ -125,6 +125,7 @@ func (ds DataStore) ShowTaskSession(taskName string) {
 	for _, session := range ds[taskName].Sessions {
 		if session.Duration == 0 {
 			fmt.Println("Start:", session.Start)
+            return
 		}
 		fmt.Println("Start:", session.Start, "End:", session.End, "Duration:", session.Duration)
 	}
