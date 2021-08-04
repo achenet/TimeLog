@@ -16,6 +16,7 @@ func init() {
 	rootCmd.AddCommand(startCmd)
 	rootCmd.AddCommand(stopCmd)
 	rootCmd.AddCommand(deleteCmd)
+	rootCmd.AddCommand(sessionCmd)
 }
 
 // Usage timelog start taskName: start counting on the task. Create it if it doesn't exist.

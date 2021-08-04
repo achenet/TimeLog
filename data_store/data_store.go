@@ -13,6 +13,13 @@ type Task struct {
 	TotalTime    time.Duration
 	CurrentStart time.Time
 	InProgress   bool
+	Sessions     []*Session
+}
+
+type Session struct {
+	Start    time.Time
+	End      time.Time
+	Duration time.Duration
 }
 
 func (ds DataStore) CheckThatAllNamesAreCorrect() bool {
@@ -29,13 +36,21 @@ func (ds DataStore) StartTask(taskName string) {
 	// Check if task exists, create if not.
 	if _, ok := ds[taskName]; !ok {
 		ds[taskName] = &Task{
-			Name: taskName,
+			Name:     taskName,
+			Sessions: []*Session{},
 		}
 	}
 
 	// Set start time
-	ds[taskName].CurrentStart = time.Now()
+	startTime := time.Now()
+	ds[taskName].CurrentStart = startTime
 	ds[taskName].InProgress = true
+
+	// Create new session
+	ds[taskName].Sessions = append(ds[taskName].Sessions,
+		&Session{
+			Start: startTime,
+		})
 }
 
 // Tell the time log software to stop counting time on an existing task
@@ -58,6 +73,10 @@ func (ds DataStore) StopTask(taskName string) {
 	elapsedTime := time.Since(ds[taskName].CurrentStart)
 	ds[taskName].TotalTime += elapsedTime
 	ds[taskName].InProgress = false
+
+	// Close session
+	ds[taskName].Sessions[len(ds[taskName].Sessions)-1].End = time.Now()
+	ds[taskName].Sessions[len(ds[taskName].Sessions)-1].Duration = elapsedTime
 }
 
 // Delete a task if it exists
@@ -91,4 +110,22 @@ func (ds DataStore) GetTaskNames() []string {
 		taskNames = append(taskNames, nameOfTask)
 	}
 	return taskNames
+}
+
+func (ds DataStore) ShowTaskSession(taskName string) {
+	// Make sure the task exists
+	if _, ok := ds[taskName]; !ok {
+		fmt.Println("No task with that name was found.")
+		// Find possible similar tasks using auto_suggest
+		possibleTasks := auto_suggest.AutoSuggest(taskName, ds.GetTaskNames())
+		fmt.Println("Possible tasks include:", possibleTasks)
+		return
+	}
+
+	for _, session := range ds[taskName].Sessions {
+		if session.Duration == 0 {
+			fmt.Println("Start:", session.Start)
+		}
+		fmt.Println("Start:", session.Start, "End:", session.End, "Duration:", session.Duration)
+	}
 }
