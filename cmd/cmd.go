@@ -70,3 +70,11 @@ func marshalAndWriteToStorageFile(data interface{}) {
 		os.Exit(1)
 	}
 }
+
+func getTaskName(args []string) {
+	if len(args) < 1 {
+		fmt.Fprintln(os.Stderr, "No task name specified.")
+		os.Exit(1)
+	}
+	return args[0]
+}

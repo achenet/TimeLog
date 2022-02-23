@@ -12,7 +12,7 @@ var stopCmd = &cobra.Command{
 
 func StopCmd(cmd *cobra.Command, args []string) {
 	// Get args
-	taskName := args[0]
+	taskName := getTaskName(args)
 
 	// Get file
 	ds := readAndUnmarshalStorageFile()
