@@ -100,7 +100,7 @@ func (ds DataStore) ShowInfo() {
 	for name, task := range ds {
 		taskStr := fmt.Sprintf(name+", Total Time: %v minutes", task.TotalTime.Minutes())
 		if task.InProgress {
-			taskStr += ", in progress, current session started at:" + fmt.Sprintf(" %v", task.CurrentStart.Layout(TIME_FORMAT))
+			taskStr += ", in progress, current session started at:" + fmt.Sprintf(" %v", task.CurrentStart.Format(TIME_FORMAT))
 		}
 		fmt.Println(taskStr)
 	}
@@ -126,7 +126,7 @@ func (ds DataStore) ShowTaskSession(taskName string) {
 
 	for _, session := range ds[taskName].Sessions {
 		if session.Duration == 0 {
-			fmt.Println("Start:", session.Start.Layout(TIME_FORMAT))
+			fmt.Println("Start:", session.Start.Format(TIME_FORMAT))
 			return
 		}
 		fmt.Println("Start:", session.Start, "End:", session.End, "Duration:", session.Duration)
