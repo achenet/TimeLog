@@ -98,7 +98,7 @@ func (ds DataStore) DeleteTask(taskName string) {
 // Show information contained in the datastore in a user-friendly format.
 func (ds DataStore) ShowInfo() {
 	for name, task := range ds {
-		taskStr := fmt.Sprintf(name+", Total Time: %v minutes", task.TotalTime.Minutes())
+		taskStr := fmt.Sprintf(name+", Total Time: %v minutes", task.TotalTime.Truncate(time.Minute).Minutes())
 		if task.InProgress {
 			taskStr += ", in progress, current session started at:" + fmt.Sprintf(" %v", task.CurrentStart.Format(TIME_FORMAT))
 		}
@@ -129,6 +129,7 @@ func (ds DataStore) ShowTaskSession(taskName string) {
 			fmt.Println("Start:", session.Start.Format(TIME_FORMAT))
 			return
 		}
-		fmt.Println("Start:", session.Start, "End:", session.End, "Duration:", session.Duration)
+		fmt.Printf("%s -> %s (%s)\n", session.Start.Format(TIME_FORMAT),
+			session.End.Format(TIME_FORMAT), session.Duration.Truncate(time.Second))
 	}
 }
